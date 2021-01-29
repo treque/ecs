@@ -1,29 +1,49 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
-public class World : MonoBehaviour
+public static class World
 {
-    private static World _instance;
+    public struct State
+    {
+        public Dictionary<EntityComponent, TransformComponent> Transforms;
+        public Dictionary<EntityComponent, ColorComponent> Colors;
+        public Dictionary<EntityComponent, VelocityComponent> Velocities;
+        public Dictionary<EntityComponent, CollisionComponent> Collisions;
+        public Dictionary<EntityComponent, DynamicComponent> Dynamics;
+        public Dictionary<EntityComponent, TopHalfComponent> TopHalf;
+    }
 
-    public static Dictionary<EntityComponent, TransformComponent> Transforms = new Dictionary<EntityComponent, TransformComponent>();
-    public static Dictionary<EntityComponent, ColorComponent> Colors = new Dictionary<EntityComponent, ColorComponent>();
-    public static Dictionary<EntityComponent, DynamicComponent> Dynamics = new Dictionary<EntityComponent, DynamicComponent>();
-    public static Dictionary<EntityComponent, VelocityComponent> Velocities = new Dictionary<EntityComponent, VelocityComponent>();
-    public static Dictionary<EntityComponent, CollisionComponent> Collisions = new Dictionary<EntityComponent, CollisionComponent>();
+    public enum StateName
+    {
+        Previous,
+        Current
+    }
+
+    public static Dictionary<StateName, State> States = new Dictionary<StateName, State>();
     public static List<EntityComponent> Entities = new List<EntityComponent>();
 
-    // Start is called before the first frame update
-    void Awake()
+    public static void InitializeWorld()
     {
-        if (_instance == null)
+        State previousState = new State
+        { 
+            Transforms = new Dictionary<EntityComponent, TransformComponent>(),
+            Colors = new Dictionary<EntityComponent, ColorComponent>(),
+            Collisions = new Dictionary<EntityComponent, CollisionComponent>(),
+            Velocities = new Dictionary<EntityComponent, VelocityComponent>(),
+            Dynamics = new Dictionary<EntityComponent, DynamicComponent>(),
+            TopHalf = new Dictionary<EntityComponent, TopHalfComponent>()
+        };
+
+        State currentState = new State
         {
-            _instance = this;
-            DontDestroyOnLoad(this);
-        }
-        else
-        {
-            Destroy(this);
-        }
+            Transforms = new Dictionary<EntityComponent, TransformComponent>(),
+            Colors = new Dictionary<EntityComponent, ColorComponent>(),
+            Collisions = new Dictionary<EntityComponent, CollisionComponent>(),
+            Velocities = new Dictionary<EntityComponent, VelocityComponent>(),
+            Dynamics = new Dictionary<EntityComponent, DynamicComponent>(),
+            TopHalf = new Dictionary<EntityComponent, TopHalfComponent>()
+        };
+    
+        States.Add(StateName.Previous, previousState);
+        States.Add(StateName.Current, currentState); 
     }
 }

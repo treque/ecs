@@ -10,9 +10,6 @@ public class RegisterSystems
         SpawnerSystem spawnerSystem = new SpawnerSystem();
         toRegister.Add(spawnerSystem);
 
-        //DynamicSystem dynamicSystem = new DynamicSystem();
-        //toRegister.Add(dynamicSystem);
-
         ColorSystem colorSystem = new ColorSystem();
         toRegister.Add(colorSystem);
 
@@ -24,6 +21,12 @@ public class RegisterSystems
 
         TransformSystem transformSystem = new TransformSystem();
         toRegister.Add(transformSystem);
+
+        TopHalfSystem topHalfSystem = new TopHalfSystem();
+        toRegister.Add(topHalfSystem);
+
+        RewindSystem rewindSystem = new RewindSystem();
+        toRegister.Add(rewindSystem);
 
         return toRegister;
     }

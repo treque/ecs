@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class VelocitySystem : ISystem
+﻿public class VelocitySystem : ISystem
 {
     public string Name
     {
@@ -18,34 +14,22 @@ public class VelocitySystem : ISystem
     {
         if (!_areVelocitiesSet)
         {
-            InitializeVelocities();
+            InitializeVelocities(World.StateName.Current);
+            InitializeVelocities(World.StateName.Previous);
             _areVelocitiesSet = true;
         }
-
-        UpdateVelocities();
     }
 
-    private void InitializeVelocities()
+    private void InitializeVelocities(World.StateName state)
     {
-        for (int i = 0; i < World.Entities.Count; ++i)
-        {
-            EntityComponent entity = World.Entities[i];      
+        foreach (EntityComponent entity in World.Entities)
+        {    
             Config config = ECSManager.Instance.Config;
-
-            if (World.Dynamics.ContainsKey(entity))
+            if (World.States[state].Dynamics.ContainsKey(entity))
             {
-                VelocityComponent velocity = new VelocityComponent(config.allShapesToSpawn[i].initialSpeed);
-                World.Velocities.Add(entity, velocity);
+                VelocityComponent velocity = new VelocityComponent(config.allShapesToSpawn[(int)entity.id].initialSpeed);
+                World.States[state].Velocities.Add(entity, velocity);
             }
-        }
-    }
-    
-    private void UpdateVelocities()
-    {
-        for (int i = 0; i < World.Entities.Count; ++i)
-        {
-            
-            //EntityComponent entity = World.Entities[i];
         }
     }
 }

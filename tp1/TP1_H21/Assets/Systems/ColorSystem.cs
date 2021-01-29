@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class ColorSystem : ISystem
+﻿public class ColorSystem : ISystem
 {
     public string Name
     {
@@ -13,34 +9,14 @@ public class ColorSystem : ISystem
     }
     public void UpdateSystem()
     {
-        for (uint i = 0; i < World.Entities.Count; ++i)
+        foreach (EntityComponent entity in World.Entities)
         {
-            EntityComponent entity = World.Entities[(int)i];
-            ColorComponent colorComponent = new ColorComponent(Color.white);
-
-            if (World.Dynamics.ContainsKey(entity))
-            {
-                if (World.Collisions.ContainsKey(entity))
-                {
-                    colorComponent.Color = Color.blue;
-                }
-                else
-                {
-                    colorComponent.Color = Color.green;
-                }
-            }
-            else
-            {
-                colorComponent.Color = Color.red;
-            }
-
-            ECSManager.Instance.UpdateShapeColor(i, colorComponent.Color);
-
-            if (!World.Colors.ContainsKey(entity))
-            {
-                World.Colors.Add(entity, colorComponent);
-            }
+            ColorBehaviour.UpdateColor(entity, World.StateName.Current);
         }
     }
 
+    public static void UpdateColors(EntityComponent entity, World.StateName state)
+    {
+        ColorBehaviour.UpdateColor(entity, state);
+    }
 }
