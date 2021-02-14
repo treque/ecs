@@ -20,6 +20,7 @@ public class RewindSystem : ISystem
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 Debug.Log("Rewind unavailable");
+                Debug.Log("Time left: " + _timer);
             }
 
             _timer -= Time.deltaTime;
