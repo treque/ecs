@@ -1,4 +1,4 @@
-﻿#define BAD_PERF // TODO CHANGEZ MOI. Mettre en commentaire pour utiliser votre propre structure
+﻿//#define BAD_PERF // TODO CHANGEZ MOI. Mettre en commentaire pour utiliser votre propre structure
 
 using System;
 using UnityEngine;
@@ -7,8 +7,8 @@ using UnityEngine;
 using InnerType = System.Collections.Generic.Dictionary<uint, IComponent>;
 using AllComponents = System.Collections.Generic.Dictionary<uint, System.Collections.Generic.Dictionary<uint, IComponent>>;
 #else
-using InnerType = ...; // TODO CHANGEZ MOI, UTILISEZ VOTRE PROPRE TYPE ICI
-using AllComponents = ...; // TODO CHANGEZ MOI, UTILISEZ VOTRE PROPRE TYPE ICI
+using InnerType = PoolAllocator; // TODO CHANGEZ MOI, UTILISEZ VOTRE PROPRE TYPE ICI
+using AllComponents = System.Collections.Generic.Dictionary<uint, PoolAllocator>; // TODO CHANGEZ MOI, UTILISEZ VOTRE PROPRE TYPE ICI
 #endif
 
 // Appeler GetHashCode sur un Type est couteux. Cette classe sert a precalculer le hashcode
@@ -50,7 +50,7 @@ internal class ComponentsManager : Singleton<ComponentsManager>
         {
             toPrint += $"{type}: \n";
 #if !BAD_PERF
-            foreach (var component in type)
+            foreach (var component in type.Value.Entities)
 #else
             foreach (var component in type.Value)
 #endif
@@ -71,7 +71,6 @@ internal class ComponentsManager : Singleton<ComponentsManager>
     {
         if (!_allComponents.ContainsKey(TypeRegistry<T>.typeID))
         {
-            //_allComponents[TypeRegistry<T>.typeID] = new Dictionary<uint, IComponent>();
             _allComponents[TypeRegistry<T>.typeID] = new InnerType();
         }
         _allComponents[TypeRegistry<T>.typeID][entityID] = component;   
@@ -117,62 +116,80 @@ internal class ComponentsManager : Singleton<ComponentsManager>
 
     public void ForEach<T1>(Action<EntityComponent, T1> lambda) where T1 : IComponent
     {
-        var allEntities = _allComponents[TypeRegistry<EntityComponent>.typeID].Values;
+        var allEntities = _allComponents[TypeRegistry<EntityComponent>.typeID].Entities;
+        
+        PoolAllocator poolAllocator_1 = _allComponents[TypeRegistry<T1>.typeID];
+        
         foreach (EntityComponent entity in allEntities)
         {
-            if (!_allComponents[TypeRegistry<T1>.typeID].ContainsKey(entity))
-            {
+            if (!poolAllocator_1.ContainsKey(entity))
+            { 
                 continue;
             }
-            lambda(entity, (T1)_allComponents[TypeRegistry<T1>.typeID][entity]);
+            lambda(entity, (T1)poolAllocator_1[entity]);
         }
     }
 
     public void ForEach<T1, T2>(Action<EntityComponent, T1, T2> lambda) where T1 : IComponent where T2 : IComponent
     {
-        var allEntities = _allComponents[TypeRegistry<EntityComponent>.typeID].Values;
+        var allEntities = _allComponents[TypeRegistry<EntityComponent>.typeID].Entities;
+
+        PoolAllocator poolAllocator_1 = _allComponents[TypeRegistry<T1>.typeID];
+        PoolAllocator poolAllocator_2 = _allComponents[TypeRegistry<T2>.typeID];
+
         foreach(EntityComponent entity in allEntities)
         {
-            if (!_allComponents[TypeRegistry<T1>.typeID].ContainsKey(entity) ||
-                !_allComponents[TypeRegistry<T2>.typeID].ContainsKey(entity)
+            if (!poolAllocator_1.ContainsKey(entity) ||
+                !poolAllocator_2.ContainsKey(entity)
                 )
             {
                 continue;
             }
-            lambda(entity, (T1)_allComponents[TypeRegistry<T1>.typeID][entity], (T2)_allComponents[TypeRegistry<T2>.typeID][entity]);
+            lambda(entity, (T1)poolAllocator_1[entity], (T2)poolAllocator_2[entity]);
         }
     }
 
     public void ForEach<T1, T2, T3>(Action<EntityComponent, T1, T2, T3> lambda) where T1 : IComponent where T2 : IComponent where T3 : IComponent
     {
-        var allEntities = _allComponents[TypeRegistry<EntityComponent>.typeID].Values;
+        var allEntities = _allComponents[TypeRegistry<EntityComponent>.typeID].Entities;
+
+        PoolAllocator poolAllocator_1 = _allComponents[TypeRegistry<T1>.typeID];
+        PoolAllocator poolAllocator_2 = _allComponents[TypeRegistry<T2>.typeID];
+        PoolAllocator poolAllocator_3 = _allComponents[TypeRegistry<T3>.typeID];
+
         foreach (EntityComponent entity in allEntities)
         {
-            if (!_allComponents[TypeRegistry<T1>.typeID].ContainsKey(entity) ||
-                !_allComponents[TypeRegistry<T2>.typeID].ContainsKey(entity) ||
-                !_allComponents[TypeRegistry<T3>.typeID].ContainsKey(entity)
+            if (!poolAllocator_1.ContainsKey(entity) ||
+                !poolAllocator_2.ContainsKey(entity) ||
+                !poolAllocator_3.ContainsKey(entity)
                 )
             {
                 continue;
             }
-            lambda(entity, (T1)_allComponents[TypeRegistry<T1>.typeID][entity], (T2)_allComponents[TypeRegistry<T2>.typeID][entity], (T3)_allComponents[TypeRegistry<T3>.typeID][entity]);
+            lambda(entity, (T1)poolAllocator_1[entity], (T2)poolAllocator_2[entity], (T3)poolAllocator_3[entity]);
         }
     }
 
     public void ForEach<T1, T2, T3, T4>(Action<EntityComponent, T1, T2, T3, T4> lambda) where T1 : IComponent where T2 : IComponent where T3 : IComponent where T4 : IComponent
     {
-        var allEntities = _allComponents[TypeRegistry<EntityComponent>.typeID].Values;
+        var allEntities = _allComponents[TypeRegistry<EntityComponent>.typeID].Entities;
+
+        PoolAllocator poolAllocator_1 = _allComponents[TypeRegistry<T1>.typeID];
+        PoolAllocator poolAllocator_2 = _allComponents[TypeRegistry<T2>.typeID];
+        PoolAllocator poolAllocator_3 = _allComponents[TypeRegistry<T3>.typeID];
+        PoolAllocator poolAllocator_4 = _allComponents[TypeRegistry<T4>.typeID];
+
         foreach (EntityComponent entity in allEntities)
         {
-            if (!_allComponents[TypeRegistry<T1>.typeID].ContainsKey(entity) ||
-                !_allComponents[TypeRegistry<T2>.typeID].ContainsKey(entity) ||
-                !_allComponents[TypeRegistry<T3>.typeID].ContainsKey(entity) ||
-                !_allComponents[TypeRegistry<T4>.typeID].ContainsKey(entity)
+            if (!poolAllocator_1.ContainsKey(entity) ||
+                !poolAllocator_2.ContainsKey(entity) ||
+                !poolAllocator_3.ContainsKey(entity) ||
+                !poolAllocator_4.ContainsKey(entity)
                 )
             {
                 continue;
             }
-            lambda(entity, (T1)_allComponents[TypeRegistry<T1>.typeID][entity], (T2)_allComponents[TypeRegistry<T2>.typeID][entity], (T3)_allComponents[TypeRegistry<T3>.typeID][entity], (T4)_allComponents[TypeRegistry<T4>.typeID][entity]);
+            lambda(entity, (T1)poolAllocator_1[entity], (T2)poolAllocator_2[entity], (T3)poolAllocator_3[entity], (T4)poolAllocator_4[entity]);
         }
     }
 
