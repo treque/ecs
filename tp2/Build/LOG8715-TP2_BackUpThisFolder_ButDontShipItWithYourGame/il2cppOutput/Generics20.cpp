@@ -19306,7 +19306,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void TypeRegistry_1__cctor_m3666634C851F845E3
 		int32_t L_1 = ColliderComponent_GetRandomNumber_m5D5710FD305C44D5B688AFB299997B4078CBD7CD_inline((ColliderComponent_t63676F5FCED092A6748B579DE2E22413ECB7006F *)(ColliderComponent_t63676F5FCED092A6748B579DE2E22413ECB7006F *)L_0, /*hidden argument*/NULL);
 		IL2CPP_RUNTIME_CLASS_INIT(Mathf_tFBDE6467D269BFE410605C7D806FD9991D4A89CB_il2cpp_TypeInfo_var);
 		int32_t L_2 = Mathf_Abs_mC7DD2FB3789B5409055836D0E7D8227AD2099FDC((int32_t)L_1, /*hidden argument*/NULL);
-		((TypeRegistry_1_t41D05CF701ABB57BB0AAE0E7B2B7DDA2329CFD93_StaticFields*)il2cpp_codegen_static_fields_for(IL2CPP_RGCTX_DATA(InitializedTypeInfo(method->klass)->rgctx_data, 1)))->set_typeID_0(((int32_t)((uint32_t)(int32_t)L_2%(uint32_t)(int32_t)((int32_t)2000))));
+		((TypeRegistry_1_t41D05CF701ABB57BB0AAE0E7B2B7DDA2329CFD93_StaticFields*)il2cpp_codegen_static_fields_for(IL2CPP_RGCTX_DATA(InitializedTypeInfo(method->klass)->rgctx_data, 1)))->set_typeID_0(((int32_t)((uint32_t)(int32_t)L_2%(uint32_t)(int32_t)((int32_t)950))));
 		return;
 	}
 }
@@ -19336,7 +19336,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void TypeRegistry_1__cctor_mAC8F3B26E7A1F971B
 		int32_t L_1 = CollisionEventComponent_GetRandomNumber_mC597E1CA5A251E32AFEB2BFB0970AEE5A2F3E69D_inline((CollisionEventComponent_tF3F19ECADC15399CEDA479E7C1602AC08F26421F *)(CollisionEventComponent_tF3F19ECADC15399CEDA479E7C1602AC08F26421F *)L_0, /*hidden argument*/NULL);
 		IL2CPP_RUNTIME_CLASS_INIT(Mathf_tFBDE6467D269BFE410605C7D806FD9991D4A89CB_il2cpp_TypeInfo_var);
 		int32_t L_2 = Mathf_Abs_mC7DD2FB3789B5409055836D0E7D8227AD2099FDC((int32_t)L_1, /*hidden argument*/NULL);
-		((TypeRegistry_1_t6A185498EFF3504CD1EA5F4DA30BAA44C3484809_StaticFields*)il2cpp_codegen_static_fields_for(IL2CPP_RGCTX_DATA(InitializedTypeInfo(method->klass)->rgctx_data, 1)))->set_typeID_0(((int32_t)((uint32_t)(int32_t)L_2%(uint32_t)(int32_t)((int32_t)2000))));
+		((TypeRegistry_1_t6A185498EFF3504CD1EA5F4DA30BAA44C3484809_StaticFields*)il2cpp_codegen_static_fields_for(IL2CPP_RGCTX_DATA(InitializedTypeInfo(method->klass)->rgctx_data, 1)))->set_typeID_0(((int32_t)((uint32_t)(int32_t)L_2%(uint32_t)(int32_t)((int32_t)950))));
 		return;
 	}
 }
@@ -19366,7 +19366,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void TypeRegistry_1__cctor_m8CD3D397821E0131F
 		int32_t L_1 = ColorComponent_GetRandomNumber_m9EC02ADFCE81D0583307C72E967C434AC1D5237A((ColorComponent_t4D8A034D34C4673D0AFA0B3755D975CAE5744E4E *)(ColorComponent_t4D8A034D34C4673D0AFA0B3755D975CAE5744E4E *)L_0, /*hidden argument*/NULL);
 		IL2CPP_RUNTIME_CLASS_INIT(Mathf_tFBDE6467D269BFE410605C7D806FD9991D4A89CB_il2cpp_TypeInfo_var);
 		int32_t L_2 = Mathf_Abs_mC7DD2FB3789B5409055836D0E7D8227AD2099FDC((int32_t)L_1, /*hidden argument*/NULL);
-		((TypeRegistry_1_t9E179EFEBA5ACEBE9FBB886975BCAD46449CC140_StaticFields*)il2cpp_codegen_static_fields_for(IL2CPP_RGCTX_DATA(InitializedTypeInfo(method->klass)->rgctx_data, 1)))->set_typeID_0(((int32_t)((uint32_t)(int32_t)L_2%(uint32_t)(int32_t)((int32_t)2000))));
+		((TypeRegistry_1_t9E179EFEBA5ACEBE9FBB886975BCAD46449CC140_StaticFields*)il2cpp_codegen_static_fields_for(IL2CPP_RGCTX_DATA(InitializedTypeInfo(method->klass)->rgctx_data, 1)))->set_typeID_0(((int32_t)((uint32_t)(int32_t)L_2%(uint32_t)(int32_t)((int32_t)950))));
 		return;
 	}
 }
@@ -19396,7 +19396,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void TypeRegistry_1__cctor_mF5C4844CD1C760850
 		int32_t L_1 = EntityComponent_GetRandomNumber_m8621B74D0BFFA2B7EE456DDA23AE16A9460158DC_inline((EntityComponent_tF0CAA5E418C6CA3BBA1C8F2B624E3A4BFBBBBCAA *)(EntityComponent_tF0CAA5E418C6CA3BBA1C8F2B624E3A4BFBBBBCAA *)L_0, /*hidden argument*/NULL);
 		IL2CPP_RUNTIME_CLASS_INIT(Mathf_tFBDE6467D269BFE410605C7D806FD9991D4A89CB_il2cpp_TypeInfo_var);
 		int32_t L_2 = Mathf_Abs_mC7DD2FB3789B5409055836D0E7D8227AD2099FDC((int32_t)L_1, /*hidden argument*/NULL);
-		((TypeRegistry_1_t98EB6F29BB6BDF204C7B6306238188070FCA9100_StaticFields*)il2cpp_codegen_static_fields_for(IL2CPP_RGCTX_DATA(InitializedTypeInfo(method->klass)->rgctx_data, 1)))->set_typeID_0(((int32_t)((uint32_t)(int32_t)L_2%(uint32_t)(int32_t)((int32_t)2000))));
+		((TypeRegistry_1_t98EB6F29BB6BDF204C7B6306238188070FCA9100_StaticFields*)il2cpp_codegen_static_fields_for(IL2CPP_RGCTX_DATA(InitializedTypeInfo(method->klass)->rgctx_data, 1)))->set_typeID_0(((int32_t)((uint32_t)(int32_t)L_2%(uint32_t)(int32_t)((int32_t)950))));
 		return;
 	}
 }
@@ -19426,7 +19426,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void TypeRegistry_1__cctor_m1A211BB9CF4EBFA45
 		int32_t L_1 = PositionComponent_GetRandomNumber_m23243ACD0CB0336FB21A7DB420AA6ABDE9C1EB68((PositionComponent_t7BE97D0FB9F432722F87C2DF4AE53953DC6175AB *)(PositionComponent_t7BE97D0FB9F432722F87C2DF4AE53953DC6175AB *)L_0, /*hidden argument*/NULL);
 		IL2CPP_RUNTIME_CLASS_INIT(Mathf_tFBDE6467D269BFE410605C7D806FD9991D4A89CB_il2cpp_TypeInfo_var);
 		int32_t L_2 = Mathf_Abs_mC7DD2FB3789B5409055836D0E7D8227AD2099FDC((int32_t)L_1, /*hidden argument*/NULL);
-		((TypeRegistry_1_t8F287D3C88A01626C4A85D300588AB78CB129BFF_StaticFields*)il2cpp_codegen_static_fields_for(IL2CPP_RGCTX_DATA(InitializedTypeInfo(method->klass)->rgctx_data, 1)))->set_typeID_0(((int32_t)((uint32_t)(int32_t)L_2%(uint32_t)(int32_t)((int32_t)2000))));
+		((TypeRegistry_1_t8F287D3C88A01626C4A85D300588AB78CB129BFF_StaticFields*)il2cpp_codegen_static_fields_for(IL2CPP_RGCTX_DATA(InitializedTypeInfo(method->klass)->rgctx_data, 1)))->set_typeID_0(((int32_t)((uint32_t)(int32_t)L_2%(uint32_t)(int32_t)((int32_t)950))));
 		return;
 	}
 }
@@ -19456,7 +19456,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void TypeRegistry_1__cctor_m418EDC538352499A7
 		int32_t L_1 = SizeComponent_GetRandomNumber_m3A452ABD6A4E3C6B00C0B1B1CAC779BE3CB49D05_inline((SizeComponent_tB43AD4248A75D88B5B312223C3054BEC93A92510 *)(SizeComponent_tB43AD4248A75D88B5B312223C3054BEC93A92510 *)L_0, /*hidden argument*/NULL);
 		IL2CPP_RUNTIME_CLASS_INIT(Mathf_tFBDE6467D269BFE410605C7D806FD9991D4A89CB_il2cpp_TypeInfo_var);
 		int32_t L_2 = Mathf_Abs_mC7DD2FB3789B5409055836D0E7D8227AD2099FDC((int32_t)L_1, /*hidden argument*/NULL);
-		((TypeRegistry_1_t8A65CA823FEE510C63AFE7766051F464E544E395_StaticFields*)il2cpp_codegen_static_fields_for(IL2CPP_RGCTX_DATA(InitializedTypeInfo(method->klass)->rgctx_data, 1)))->set_typeID_0(((int32_t)((uint32_t)(int32_t)L_2%(uint32_t)(int32_t)((int32_t)2000))));
+		((TypeRegistry_1_t8A65CA823FEE510C63AFE7766051F464E544E395_StaticFields*)il2cpp_codegen_static_fields_for(IL2CPP_RGCTX_DATA(InitializedTypeInfo(method->klass)->rgctx_data, 1)))->set_typeID_0(((int32_t)((uint32_t)(int32_t)L_2%(uint32_t)(int32_t)((int32_t)950))));
 		return;
 	}
 }
@@ -19486,7 +19486,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void TypeRegistry_1__cctor_m37CCCD0A81B4F86D8
 		int32_t L_1 = SpawnInfo_GetRandomNumber_m5362720B7103EA82EE90F2C6BD4B13DD57E61FA2_inline((SpawnInfo_t7F1E0F6A9E151544DE21A4B578A17ACB1B258C7F *)(SpawnInfo_t7F1E0F6A9E151544DE21A4B578A17ACB1B258C7F *)L_0, /*hidden argument*/NULL);
 		IL2CPP_RUNTIME_CLASS_INIT(Mathf_tFBDE6467D269BFE410605C7D806FD9991D4A89CB_il2cpp_TypeInfo_var);
 		int32_t L_2 = Mathf_Abs_mC7DD2FB3789B5409055836D0E7D8227AD2099FDC((int32_t)L_1, /*hidden argument*/NULL);
-		((TypeRegistry_1_tBA065575416BFE7418100EC637B3DF5E2F7460D3_StaticFields*)il2cpp_codegen_static_fields_for(IL2CPP_RGCTX_DATA(InitializedTypeInfo(method->klass)->rgctx_data, 1)))->set_typeID_0(((int32_t)((uint32_t)(int32_t)L_2%(uint32_t)(int32_t)((int32_t)2000))));
+		((TypeRegistry_1_tBA065575416BFE7418100EC637B3DF5E2F7460D3_StaticFields*)il2cpp_codegen_static_fields_for(IL2CPP_RGCTX_DATA(InitializedTypeInfo(method->klass)->rgctx_data, 1)))->set_typeID_0(((int32_t)((uint32_t)(int32_t)L_2%(uint32_t)(int32_t)((int32_t)950))));
 		return;
 	}
 }
@@ -19516,7 +19516,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void TypeRegistry_1__cctor_m35F91AFA5FAB8D11A
 		int32_t L_1 = SpeedComponent_GetRandomNumber_m849DECDCE63E7628A65218BD35B270298CD0BD1C_inline((SpeedComponent_t3410F3DED2B5A9D0BAACB0845B85C1D54EF2E62B *)(SpeedComponent_t3410F3DED2B5A9D0BAACB0845B85C1D54EF2E62B *)L_0, /*hidden argument*/NULL);
 		IL2CPP_RUNTIME_CLASS_INIT(Mathf_tFBDE6467D269BFE410605C7D806FD9991D4A89CB_il2cpp_TypeInfo_var);
 		int32_t L_2 = Mathf_Abs_mC7DD2FB3789B5409055836D0E7D8227AD2099FDC((int32_t)L_1, /*hidden argument*/NULL);
-		((TypeRegistry_1_tB8CE877135FBA8EC35859479FD4F2DD7D2C1EC4E_StaticFields*)il2cpp_codegen_static_fields_for(IL2CPP_RGCTX_DATA(InitializedTypeInfo(method->klass)->rgctx_data, 1)))->set_typeID_0(((int32_t)((uint32_t)(int32_t)L_2%(uint32_t)(int32_t)((int32_t)2000))));
+		((TypeRegistry_1_tB8CE877135FBA8EC35859479FD4F2DD7D2C1EC4E_StaticFields*)il2cpp_codegen_static_fields_for(IL2CPP_RGCTX_DATA(InitializedTypeInfo(method->klass)->rgctx_data, 1)))->set_typeID_0(((int32_t)((uint32_t)(int32_t)L_2%(uint32_t)(int32_t)((int32_t)950))));
 		return;
 	}
 }
@@ -19546,7 +19546,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void TypeRegistry_1__cctor_mB509DB2C535C53CD3
 		int32_t L_1 = InterfaceFuncInvoker0< int32_t >::Invoke(0 /* System.Int32 IComponent::GetRandomNumber() */, IComponent_t8CB6FF7B58E38C222D61DDE7C20F1EAD88CC1107_il2cpp_TypeInfo_var, (RuntimeObject*)(*L_0));
 		IL2CPP_RUNTIME_CLASS_INIT(Mathf_tFBDE6467D269BFE410605C7D806FD9991D4A89CB_il2cpp_TypeInfo_var);
 		int32_t L_2 = Mathf_Abs_mC7DD2FB3789B5409055836D0E7D8227AD2099FDC((int32_t)L_1, /*hidden argument*/NULL);
-		((TypeRegistry_1_tF95B24A438358A5FFAFF80A1791B5DA3547EE8DC_StaticFields*)il2cpp_codegen_static_fields_for(IL2CPP_RGCTX_DATA(InitializedTypeInfo(method->klass)->rgctx_data, 1)))->set_typeID_0(((int32_t)((uint32_t)(int32_t)L_2%(uint32_t)(int32_t)((int32_t)2000))));
+		((TypeRegistry_1_tF95B24A438358A5FFAFF80A1791B5DA3547EE8DC_StaticFields*)il2cpp_codegen_static_fields_for(IL2CPP_RGCTX_DATA(InitializedTypeInfo(method->klass)->rgctx_data, 1)))->set_typeID_0(((int32_t)((uint32_t)(int32_t)L_2%(uint32_t)(int32_t)((int32_t)950))));
 		return;
 	}
 }

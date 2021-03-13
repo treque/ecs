@@ -40,7 +40,7 @@ internal class ComponentsManager : Singleton<ComponentsManager>
 {
     private AllComponents _allComponents = new AllComponents();
 
-    public const int maxEntities = 2000;
+    public const int maxEntities = 950;
 
     public void DebugPrint()
     {
