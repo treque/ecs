@@ -44,6 +44,7 @@ public class PoolAllocator
     private void InitializePool()
     {
         _pool = new IComponent[ComponentsManager.maxEntities];
+        _entities = new IComponent[ComponentsManager.maxEntities];
     }
 
     private void Allocate(int key, IComponent component)
@@ -80,12 +81,13 @@ public class PoolAllocator
     {
         return _indirectionTable[entity.id] != -1 && _pool[_indirectionTable[entity.id]] != null;
     }
-    
+
     public IComponent[] Entities
     {
         get
         {
-            _entities = _pool.Take(_index).ToArray();
+            if (_index > 0)
+                _entities = _pool.Take(_index).ToArray();
 
             return _entities;
         }

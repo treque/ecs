@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Config
   m_EditorClassIdentifier: 
   numberOfShapesToSpawn: 250
-  headless: 0
+  headless: 1
   _systemsEnabled:
     keys:
     - SpawnSystem
