@@ -52,10 +52,7 @@ public class CustomNetworkManager : NetworkingManager
                 writer.WriteVector2(msg.pos);
                 writer.WriteVector2(msg.speed);
                 writer.WriteDouble(msg.size);
-                writer.WriteUInt32(msg.inputKeyW);
-                writer.WriteUInt32(msg.inputKeyA);
-                writer.WriteUInt32(msg.inputKeyS);
-                writer.WriteUInt32(msg.inputKeyD);
+                writer.WriteVector2(msg.inputs);
                 CustomMessagingManager.SendNamedMessage("Replication", null, stream, "customChannel");
             }
         }
@@ -75,10 +72,7 @@ public class CustomNetworkManager : NetworkingManager
                 writer.WriteVector2(msg.pos);
                 writer.WriteVector2(msg.speed);
                 writer.WriteDouble(msg.size);
-                writer.WriteUInt32(msg.inputKeyW);
-                writer.WriteUInt32(msg.inputKeyA);
-                writer.WriteUInt32(msg.inputKeyS);
-                writer.WriteUInt32(msg.inputKeyD);
+                writer.WriteVector2(msg.inputs);
                 CustomMessagingManager.SendNamedMessage("Replication", this.ServerClientId, stream, "customChannel");
             }
         }
@@ -97,10 +91,7 @@ public class CustomNetworkManager : NetworkingManager
             replicationMessage.pos = reader.ReadVector2();
             replicationMessage.speed = reader.ReadVector2();
             replicationMessage.size = (float)reader.ReadDouble();
-            replicationMessage.inputKeyW = reader.ReadUInt32();
-            replicationMessage.inputKeyA = reader.ReadUInt32();
-            replicationMessage.inputKeyS = reader.ReadUInt32();
-            replicationMessage.inputKeyD = reader.ReadUInt32();
+            replicationMessage.inputs = reader.ReadVector2();
             ComponentsManager.Instance.SetComponent<ReplicationMessage>(replicationMessage.entityId, replicationMessage);
 
             if (!ComponentsManager.Instance.EntityContains<EntityComponent>(replicationMessage.entityId))
@@ -130,16 +121,14 @@ public class CustomNetworkManager : NetworkingManager
             replicationMessage.pos = reader.ReadVector2();
             replicationMessage.speed = reader.ReadVector2();
             replicationMessage.size = (float)reader.ReadDouble();
-            replicationMessage.inputKeyW = reader.ReadUInt32();
-            replicationMessage.inputKeyA = reader.ReadUInt32();
-            replicationMessage.inputKeyS = reader.ReadUInt32();
-            replicationMessage.inputKeyD = reader.ReadUInt32();
+            replicationMessage.inputs = reader.ReadVector2();
 
             if (clientId == replicationMessage.entityId)
             {
                 InputMessage inputMessage = new InputMessage();
                 inputMessage.message = replicationMessage;
                 inputMessage.handled = false;
+                inputMessage.inputs = replicationMessage.inputs;
                 ComponentsManager.Instance.SetComponent<InputMessage>(replicationMessage.entityId, inputMessage);
             }
             else // TODO ?
