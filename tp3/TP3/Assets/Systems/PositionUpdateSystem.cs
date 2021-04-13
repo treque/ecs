@@ -27,6 +27,7 @@ public class PositionUpdateSystem : ISystem {
 
     public static Vector2 GetNewPosition(Vector2 position, Vector2 speed)
     {
+        Debug.Log(Time.deltaTime);
         return GetNewPosition(position, speed, Time.deltaTime);
     }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InputSystem : ISystem
 {
-    private const float _SPEED = 15.0f;
+    private const float _SPEED = 20.0f;
     
     public string Name
     {
@@ -45,7 +45,7 @@ public class InputSystem : ISystem
                     message.isAck = 1;
                     message.timeCreated = inputMessage.clientTime;
                     message.inputMessageID = inputMessage.inputMessageID;
-                    message.pos = PositionUpdateSystem.GetNewPosition(shape.pos, shape.speed);
+                    message.pos = PositionUpdateSystem.GetNewPosition(shape.pos, shape.speed, inputMessage.clientTime);
                     //ComponentsManager.Instance.SetComponent<ReplicationMessage>(inputMessage.message.entityId, message);
                     ECSManager.Instance.NetworkManager.SendReplicationMessage(message);
                 }
@@ -106,6 +106,7 @@ public class InputSystem : ISystem
                         newPos
                     )
                 );
+                Debug.Log("added to history: time : " + inputMsg.clientTime + " pos: " + newPos);
 
                 //todo: simuler cote client
                 //shape.speed = _SPEED * message.inputs; // positioN??????

@@ -119,7 +119,6 @@ public class CustomNetworkManager : NetworkingManager
             
             if (replicationMessage.isAck == 1) // client receives ack and adds component to deal with
             {
-                Debug.Log("received ack msg from server");
                 ServerAcknowledgeMessage acknowledgeMessage = new ServerAcknowledgeMessage();
                 acknowledgeMessage.inputMessageID = replicationMessage.inputMessageID;
                 acknowledgeMessage.confirmedPosition = replicationMessage.pos;
