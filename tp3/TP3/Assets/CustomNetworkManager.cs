@@ -53,6 +53,9 @@ public class CustomNetworkManager : NetworkingManager
                 writer.WriteVector2(msg.speed);
                 writer.WriteDouble(msg.size);
                 writer.WriteVector2(msg.inputs);
+                writer.WriteUInt32(msg.isAck);
+                writer.WriteInt32(msg.inputMessageID);
+                writer.WriteUInt32(msg.isInput);
                 CustomMessagingManager.SendNamedMessage("Replication", null, stream, "customChannel");
             }
         }
@@ -73,6 +76,9 @@ public class CustomNetworkManager : NetworkingManager
                 writer.WriteVector2(msg.speed);
                 writer.WriteDouble(msg.size);
                 writer.WriteVector2(msg.inputs);
+                writer.WriteUInt32(msg.isAck);
+                writer.WriteInt32(msg.inputMessageID);
+                writer.WriteUInt32(msg.isInput);
                 CustomMessagingManager.SendNamedMessage("Replication", this.ServerClientId, stream, "customChannel");
             }
         }
@@ -92,6 +98,10 @@ public class CustomNetworkManager : NetworkingManager
             replicationMessage.speed = reader.ReadVector2();
             replicationMessage.size = (float)reader.ReadDouble();
             replicationMessage.inputs = reader.ReadVector2();
+            replicationMessage.isAck = reader.ReadUInt32();
+            replicationMessage.inputMessageID = reader.ReadInt32();
+            replicationMessage.isInput = reader.ReadUInt32();
+
             ComponentsManager.Instance.SetComponent<ReplicationMessage>(replicationMessage.entityId, replicationMessage);
 
             if (!ComponentsManager.Instance.EntityContains<EntityComponent>(replicationMessage.entityId))
@@ -104,6 +114,16 @@ public class CustomNetworkManager : NetworkingManager
                 }
                 spawnInfo.replicatedEntitiesToSpawn.Add(replicationMessage);
                 ComponentsManager.Instance.SetComponent<SpawnInfo>(new EntityComponent(0), spawnInfo);
+            }
+            
+            if (replicationMessage.isAck == 1) // client receives ack and adds component to deal with
+            {
+                Debug.Log("received ack msg from server");
+                ServerAcknowledgeMessage acknowledgeMessage = new ServerAcknowledgeMessage();
+                acknowledgeMessage.inputMessageID = replicationMessage.inputMessageID;
+                acknowledgeMessage.confirmedPosition = replicationMessage.pos;
+                acknowledgeMessage.clientTime = replicationMessage.timeCreated; // double check time is ok here
+                ComponentsManager.Instance.SetComponent<ServerAcknowledgeMessage>(replicationMessage.entityId, acknowledgeMessage);
             }
         }
     }
@@ -122,13 +142,18 @@ public class CustomNetworkManager : NetworkingManager
             replicationMessage.speed = reader.ReadVector2();
             replicationMessage.size = (float)reader.ReadDouble();
             replicationMessage.inputs = reader.ReadVector2();
+            replicationMessage.isAck = reader.ReadUInt32();
+            replicationMessage.inputMessageID = reader.ReadInt32();
+            replicationMessage.isInput = reader.ReadUInt32(); // todo change to bool
 
-            if (clientId == replicationMessage.entityId)
+            if (replicationMessage.isInput == 1) // lp semble dire que ca va etre toujours true
             {
                 InputMessage inputMessage = new InputMessage();
+                inputMessage.inputMessageID = replicationMessage.inputMessageID;
                 inputMessage.message = replicationMessage;
                 inputMessage.handled = false;
                 inputMessage.inputs = replicationMessage.inputs;
+                inputMessage.clientTime = replicationMessage.timeCreated;
                 ComponentsManager.Instance.SetComponent<InputMessage>(replicationMessage.entityId, inputMessage);
             }
             else // TODO ?
