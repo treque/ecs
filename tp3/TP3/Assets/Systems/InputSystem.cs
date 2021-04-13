@@ -46,7 +46,7 @@ public class InputSystem : ISystem
                     message.timeCreated = inputMessage.clientTime;
                     message.inputMessageID = inputMessage.inputMessageID;
                     message.pos = PositionUpdateSystem.GetNewPosition(shape.pos, shape.speed);
-                    ComponentsManager.Instance.SetComponent<ReplicationMessage>(inputMessage.message.entityId, message);
+                    //ComponentsManager.Instance.SetComponent<ReplicationMessage>(inputMessage.message.entityId, message);
                     ECSManager.Instance.NetworkManager.SendReplicationMessage(message);
                 }
 
@@ -88,7 +88,8 @@ public class InputSystem : ISystem
         if (message.inputs != Vector2.zero)
         {
             // try setting replication component instead
-            ECSManager.Instance.NetworkManager.SendClientInputReplicationMessage(message);
+            ComponentsManager.Instance.SetComponent<ReplicationMessage>(clientId, message);
+            //ECSManager.Instance.NetworkManager.SendClientInputReplicationMessage(message);
 
             if (ComponentsManager.Instance.TryGetComponent<ShapeComponent>(clientId, out ShapeComponent shape))
             {
@@ -105,16 +106,11 @@ public class InputSystem : ISystem
                         newPos
                     )
                 );
-                ComponentsManager.Instance.InputPositionHistory.Enqueue(
-                    new KeyValuePair<InputMessage, Vector2>(
-                        inputMsg,
-                        newPos
-                    )
-                );
-
 
                 //todo: simuler cote client
-                shape.speed = _SPEED * message.inputs; // positioN??????
+                //shape.speed = _SPEED * message.inputs; // positioN??????
+                shape.pos = newPos;
+                // this calls it twice
                 ComponentsManager.Instance.SetComponent<ShapeComponent>(clientId, shape);
             }
         }

@@ -29,12 +29,12 @@
         }
 
         if (ECSManager.Instance.NetworkManager.isClient)
-        {
-            // TODO
+        {  
+            //TODO
             ComponentsManager.Instance.ForEach<ReplicationMessage>((entityID, msg) =>
             {
                 msg.messageID = messagingInfo.currentMessageId++;
-                ECSManager.Instance.NetworkManager.SendClientInputReplicationMessage(msg);
+               ECSManager.Instance.NetworkManager.SendClientInputReplicationMessage(msg);
             });
         }
 

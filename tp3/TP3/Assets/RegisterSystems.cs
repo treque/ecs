@@ -12,10 +12,10 @@ public class RegisterSystems
         List<ISystem> toRegister = new List<ISystem>();
         // Add your systems
         toRegister.Add(new SpawnSystem());
+        toRegister.Add(new InputSystem());
         toRegister.Add(new WallCollisionDetectionSystem());
         toRegister.Add(new CircleCollisionDetectionSystem());
         toRegister.Add(new BounceBackSystem());
-        toRegister.Add(new InputSystem());
         toRegister.Add(new ServerAcknowledgeSystem());
         toRegister.Add(new PositionUpdateSystem());
         toRegister.Add(new ReplicationSystem());

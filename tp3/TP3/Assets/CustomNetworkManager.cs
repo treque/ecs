@@ -39,6 +39,7 @@ public class CustomNetworkManager : NetworkingManager
         RegisterServerNetworkHandlers();
     }
 
+// server sends to client
     public void SendReplicationMessage(ReplicationMessage msg)
     {
         using (PooledBitStream stream = PooledBitStream.Get())
@@ -146,7 +147,7 @@ public class CustomNetworkManager : NetworkingManager
             replicationMessage.inputMessageID = reader.ReadInt32();
             replicationMessage.isInput = reader.ReadUInt32(); // todo change to bool
 
-            if (replicationMessage.isInput == 1) // lp semble dire que ca va etre toujours true
+            if (replicationMessage.isInput == 1) 
             {
                 InputMessage inputMessage = new InputMessage();
                 inputMessage.inputMessageID = replicationMessage.inputMessageID;

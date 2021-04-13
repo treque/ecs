@@ -63,12 +63,12 @@ public class ReplicationSystem : ISystem
             }
             else
             {
-                if (msgReplication.entityId != (uint)ECSManager.Instance.NetworkManager.LocalClientId)
+                if (msgReplication.entityId != ECSManager.Instance.NetworkManager.LocalClientId)
                 {
                     component.pos = msgReplication.pos;
+                    component.speed = msgReplication.speed;
                 }
 
-                component.speed = msgReplication.speed;
                 component.size = msgReplication.size;
                 ComponentsManager.Instance.SetComponent<ShapeComponent>(msgReplication.entityId, component);
             }
