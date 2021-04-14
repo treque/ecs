@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ExtrapolationSystem : ISystem
 {
-  
+    bool done = false;
     public string Name
     {
         get
@@ -15,7 +15,7 @@ public class ExtrapolationSystem : ISystem
 
     public void UpdateSystem()
     {
-        if (ECSManager.Instance.NetworkManager.isClient && ECSManager.Instance.Config.enablDeadReckoning)
+        if (!done && ECSManager.Instance.NetworkManager.isClient && ECSManager.Instance.Config.enablDeadReckoning)
         {
             UpdateSystemClient();
         }
@@ -25,7 +25,9 @@ public class ExtrapolationSystem : ISystem
         ulong rtt = ECSManager.Instance.NetworkManager.NetworkConfig.NetworkTransport.GetCurrentRtt(
             ECSManager.Instance.NetworkManager.LocalClientId
         );
-        int framesToExtrapolate = (int)(((rtt) / 1000f) / Time.deltaTime);
+
+        ulong latency = rtt/2;
+        int framesToExtrapolate = (int)(((latency) / 1000f) / Time.deltaTime);
         for (int i = 0; i < framesToExtrapolate; ++i)
         {
             SimulateNonClientEntities();
@@ -40,5 +42,6 @@ public class ExtrapolationSystem : ISystem
         {
             system.UpdateSystem();
         }
+        done = true;
     }
 }

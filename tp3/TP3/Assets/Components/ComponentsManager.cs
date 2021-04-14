@@ -114,12 +114,6 @@ internal class ComponentsManager : Singleton<ComponentsManager>
             {
                 continue;
             }
-
-            /*if (ECSManager.Instance.Config.enablDeadReckoning && 
-                entity == ECSManager.Instance.NetworkManager.LocalClientId && 
-                ECSManager.Instance.NetworkManager.isClient) 
-                continue;*/
-
             lambda(entity, (T1)_allComponents[typeof(T1)][entity]);
         }
     }
@@ -135,12 +129,6 @@ internal class ComponentsManager : Singleton<ComponentsManager>
             {
                 continue;
             }
-
-            /*if (ECSManager.Instance.Config.enablDeadReckoning && 
-                entity == ECSManager.Instance.NetworkManager.LocalClientId && 
-                ECSManager.Instance.NetworkManager.isClient) 
-                continue;*/
-                
             lambda(entity, (T1)_allComponents[typeof(T1)][entity], (T2)_allComponents[typeof(T2)][entity]);
         }
     }
@@ -157,12 +145,6 @@ internal class ComponentsManager : Singleton<ComponentsManager>
             {
                 continue;
             }
-
-            /*if (ECSManager.Instance.Config.enablDeadReckoning && 
-                entity == ECSManager.Instance.NetworkManager.LocalClientId && 
-                ECSManager.Instance.NetworkManager.isClient) 
-                continue;*/
-
             lambda(entity, (T1)_allComponents[typeof(T1)][entity], (T2)_allComponents[typeof(T2)][entity], (T3)_allComponents[typeof(T3)][entity]);
         }
     }
@@ -180,12 +162,6 @@ internal class ComponentsManager : Singleton<ComponentsManager>
             {
                 continue;
             }
-
-            /*if (ECSManager.Instance.Config.enablDeadReckoning && 
-                entity == ECSManager.Instance.NetworkManager.LocalClientId && 
-                ECSManager.Instance.NetworkManager.isClient) 
-                continue;*/
-
             lambda(entity, (T1)_allComponents[typeof(T1)][entity], (T2)_allComponents[typeof(T2)][entity], (T3)_allComponents[typeof(T3)][entity], (T4)_allComponents[typeof(T4)][entity]);
         }
     }

@@ -15,11 +15,6 @@ public class BounceBackSystem : ISystem
     {
         ComponentsManager.Instance.ForEach<CollisionEventComponent, ShapeComponent>((entity, collisionEventComponent, shapeComponent) =>
         {
-            /*if (ECSManager.Instance.Config.enablDeadReckoning && 
-                entity == ECSManager.Instance.NetworkManager.LocalClientId && 
-                ECSManager.Instance.NetworkManager.isClient) 
-                continue;*/
-
             Vector2 speed = shapeComponent.speed;
 
             shapeComponent.speed = -shapeComponent.speed;

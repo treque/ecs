@@ -64,18 +64,27 @@ public class ReplicationSystem : ISystem
             }
             else
             {
-                // If it is an entity that is a client, ignore position and speed replication, unless we're enabling prediction
-                if (    msgReplication.entityId != ECSManager.Instance.NetworkManager.LocalClientId
-                        || (    !ECSManager.Instance.Config.enableInputPrediction 
-                                && (msgReplication.entityId == ECSManager.Instance.NetworkManager.LocalClientId
-                                )))
+                // On préfère que vous évaluez notre travail sur le input prediction séparément de notre travail sur
+                // l'extrapolation parce qu'il nous manquait du temps pour combiner les deux.
+                if (!ECSManager.Instance.Config.enableInputPrediction && 
+                    ECSManager.Instance.Config.enablDeadReckoning && 
+                    msgReplication.entityId == ECSManager.Instance.NetworkManager.LocalClientId)
                 {
                     component.pos = msgReplication.pos;
                     component.speed = msgReplication.speed;
+                    component.size = msgReplication.size;
+                    ComponentsManager.Instance.SetComponent<ShapeComponent>(msgReplication.entityId, component);
                 }
-
-                component.size = msgReplication.size;
-                ComponentsManager.Instance.SetComponent<ShapeComponent>(msgReplication.entityId, component);
+                
+                if (ECSManager.Instance.Config.enableInputPrediction && 
+                    !ECSManager.Instance.Config.enablDeadReckoning && 
+                    msgReplication.entityId != ECSManager.Instance.NetworkManager.LocalClientId)
+                {
+                    component.pos = msgReplication.pos;
+                    component.speed = msgReplication.speed;
+                    component.size = msgReplication.size;
+                    ComponentsManager.Instance.SetComponent<ShapeComponent>(msgReplication.entityId, component);
+                }
             }
         });
     }
