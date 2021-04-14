@@ -22,7 +22,9 @@ public class ExtrapolationSystem : ISystem
     }
     public void UpdateSystemClient()
     {
-        ulong rtt = 0;// ECSManager.Instance.GetLastRTT();
+        ulong rtt = ECSManager.Instance.NetworkManager.NetworkConfig.NetworkTransport.GetCurrentRtt(
+            ECSManager.Instance.NetworkManager.LocalClientId
+        );
         int framesToExtrapolate = (int)(((rtt) / 1000f) / Time.deltaTime);
         for (int i = 0; i < framesToExtrapolate; ++i)
         {
@@ -32,8 +34,11 @@ public class ExtrapolationSystem : ISystem
 
     private void SimulateNonClientEntities()
     {
-        //Todo // either at every frame you set the client's position/speed to what it was before the simulation
+        // either at every frame you set the client's position/speed to what it was before the simulation
         // either you change the position
-        //PositionUpdateSystem.UpdateSystem(); 
+        foreach(ISystem system in ECSManager.Instance.SystemsToExtrapolate)
+        {
+            system.UpdateSystem();
+        }
     }
 }

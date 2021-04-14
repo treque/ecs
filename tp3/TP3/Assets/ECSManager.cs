@@ -65,6 +65,8 @@ public class ECSManager : MonoBehaviour {
     #region System Management
     private List<ISystem> _allSystems = new List<ISystem>();
 
+    public List<ISystem> SystemsToExtrapolate = new List<ISystem>();
+
     private void FixedUpdate()
     {
         _frameRate = 1.0f / Time.deltaTime;
@@ -77,6 +79,7 @@ public class ECSManager : MonoBehaviour {
     private void Awake()
     {
         _allSystems = RegisterSystems.GetListOfSystems();
+        SystemsToExtrapolate = RegisterSystemsToExtrapolate.GetListOfSystemsToExtrapolate(_allSystems);
     }
 
     #endregion
@@ -99,16 +102,8 @@ public class ECSManager : MonoBehaviour {
         }
     }
 
-    public int messageSentTime;
     public float SPEED = 10.0f;
     
-    // returns RTT in ms
-    public ulong GetCurrentRTT()
-    {
-        // TODO, calculate RTT since last frame
-        return 1000;
-    }
-
     private ECSManager() { }
     #endregion
 

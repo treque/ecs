@@ -14,6 +14,11 @@ public class CircleCollisionDetectionSystem : ISystem
     {
         ComponentsManager.Instance.ForEach<ShapeComponent>((entity1, shapeComponent1) =>
         {
+            /*if (ECSManager.Instance.Config.enablDeadReckoning && 
+                entity1 == ECSManager.Instance.NetworkManager.LocalClientId && 
+                ECSManager.Instance.NetworkManager.isClient) 
+                continue;
+            */
             ComponentsManager.Instance.ForEach<ShapeComponent, PlayerComponent>((entity2, shapeComponent2, playerComponent) =>
             {
                 var pos1 = shapeComponent1.pos;

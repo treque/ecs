@@ -20,7 +20,11 @@ public class PositionUpdateSystem : ISystem {
     public void UpdateSystem(float deltaTime)
     {
         ComponentsManager.Instance.ForEach<ShapeComponent>((entityID, shapeComponent) => {
-            //if( deadrecoking && clientid) break;
+            /*if (ECSManager.Instance.Config.enablDeadReckoning && 
+                entityID == ECSManager.Instance.NetworkManager.LocalClientId && 
+                ECSManager.Instance.NetworkManager.isClient) 
+                continue;*/
+
             shapeComponent.pos = GetNewPosition(shapeComponent.pos, shapeComponent.speed, deltaTime);
             ComponentsManager.Instance.SetComponent<ShapeComponent>(entityID, shapeComponent);
         });
