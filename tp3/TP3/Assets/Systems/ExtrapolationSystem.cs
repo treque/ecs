@@ -43,5 +43,10 @@ public class ExtrapolationSystem : ISystem
             system.UpdateSystem();
         }
         done = true;
+
+        // syst keeps ~ 100 frames
+        // when receving server msg, check its time, subtract the latency (equivalent of time for client), 
+        // compare at that moment, if its the same as thhe server's 
+        // interpolate between the two frames if between two frames (check with a threshhold)
     }
 }

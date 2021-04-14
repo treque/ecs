@@ -123,24 +123,6 @@ public class CustomNetworkManager : NetworkingManager
         }
     }
 
-// server receives client msg
-    /*private void HandleClientReplicationMessage(ulong clientId, Stream stream)
-    {
-        ReplicationMessage replicationMessage = new ReplicationMessage();
-        using (PooledBitReader reader = PooledBitReader.Get(stream))
-        {
-            replicationMessage.messageID = reader.ReadInt32();
-            replicationMessage.timeCreated = reader.ReadInt32();
-            replicationMessage.entityId = reader.ReadUInt32();
-            replicationMessage.shape = (Config.Shape)reader.ReadInt16();
-            replicationMessage.pos = reader.ReadVector2();
-            replicationMessage.speed = reader.ReadVector2();
-            replicationMessage.size = (float)reader.ReadDouble();
-            
-            ComponentsManager.Instance.SetComponent<ReplicationMessage>(replicationMessage.entityId, replicationMessage);
-        }
-    }*/
-
     private void HandleClientInputMessage(ulong clientId, Stream stream)
     {
         InputMessage inputMessage = new InputMessage();
@@ -184,7 +166,6 @@ public class CustomNetworkManager : NetworkingManager
     public void RegisterServerNetworkHandlers()
     {
         // TODO
-        //CustomMessagingManager.RegisterNamedMessageHandler("Replication", HandleClientReplicationMessage);
         CustomMessagingManager.RegisterNamedMessageHandler("Input", HandleClientInputMessage);
     }
 

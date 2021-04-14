@@ -31,15 +31,8 @@ public class ServerAcknowledgeSystem : ISystem
                 Vector2 positionHistorique = inputHistorique.pos; 
                 Vector2 positionServeur = ackMsg.confirmedPosition;
 
-                Debug.Log("Server ACK for time: " + ackMsg.clientTime);
-                Debug.Log("historique: " + positionHistorique + "  serveur:  " + positionServeur);
-                foreach(InputInfo entry in history)
-                {
-                    Debug.Log("time: +  " + entry.clientTime + "  pos: " + entry.pos);
-                }
                 if (positionHistorique != positionServeur)
                 {
-                    Debug.Log("CORRECTION");
                     if (ComponentsManager.Instance.TryGetComponent<ShapeComponent>(entityID, out ShapeComponent shape))
                     {
                         Vector2 finalPos = positionServeur;
@@ -57,10 +50,6 @@ public class ServerAcknowledgeSystem : ISystem
                         shape.pos = finalPos;
                         ComponentsManager.Instance.SetComponent<ShapeComponent>(entityID, shape);
                     }
-                }
-                else
-                {
-                    Debug.Log("BONNE POSITION");
                 }
             }       
         });
@@ -81,7 +70,6 @@ public class ServerAcknowledgeSystem : ISystem
             if (entry.clientTime < acknowledgedTime) 
             {
                 list.Remove(entry);
-                Debug.Log("Clearing at time: " + entry.clientTime);
             }
         }
     }
