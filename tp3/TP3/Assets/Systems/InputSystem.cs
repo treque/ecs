@@ -45,7 +45,7 @@ public class InputSystem : ISystem
                     message.isAck = 1;
                     message.timeCreated = inputMessage.clientTime;
                     message.inputMessageID = inputMessage.inputMessageID;
-                    message.pos = PositionUpdateSystem.GetNewPosition(shape.pos, shape.speed, inputMessage.clientTime);
+                    message.pos = PositionUpdateSystem.GetNewPosition(shape.pos, shape.speed);
                     //ComponentsManager.Instance.SetComponent<ReplicationMessage>(inputMessage.message.entityId, message);
                     ECSManager.Instance.NetworkManager.SendReplicationMessage(message);
                 }
