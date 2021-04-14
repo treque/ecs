@@ -41,6 +41,7 @@ public class ReplicationSystem : ISystem
             ComponentsManager.Instance.SetComponent<ReplicationMessage>(entityID, msg);
         });
     }
+
     public static void UpdateSystemClient()
     {
         // apply state from server
@@ -63,7 +64,11 @@ public class ReplicationSystem : ISystem
             }
             else
             {
-                if (msgReplication.entityId != ECSManager.Instance.NetworkManager.LocalClientId)
+                // If it is an entity that is a client, ignore position and speed replication, unless we're enabling prediction
+                if (    msgReplication.entityId != ECSManager.Instance.NetworkManager.LocalClientId
+                        || (    !ECSManager.Instance.Config.enableInputPrediction 
+                                && (msgReplication.entityId == ECSManager.Instance.NetworkManager.LocalClientId
+                                )))
                 {
                     component.pos = msgReplication.pos;
                     component.speed = msgReplication.speed;

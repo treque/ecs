@@ -10,11 +10,4 @@ public struct ReplicationMessage : IComponent
     public Vector2 pos;
     public Vector2 speed;
     public float size;
-    public Vector2 inputs;
-
-    public uint isAck;
-    public int inputMessageID; //might be useless
-
-    public uint isInput;
-
 }

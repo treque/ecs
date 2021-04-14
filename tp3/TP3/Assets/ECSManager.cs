@@ -98,6 +98,17 @@ public class ECSManager : MonoBehaviour {
             return _instance;
         }
     }
+
+    public int messageSentTime;
+    public float SPEED = 10.0f;
+    
+    // returns RTT in ms
+    public ulong GetCurrentRTT()
+    {
+        // TODO, calculate RTT since last frame
+        return 1000;
+    }
+
     private ECSManager() { }
     #endregion
 

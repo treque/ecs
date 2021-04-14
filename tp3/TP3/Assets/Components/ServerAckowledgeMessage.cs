@@ -2,9 +2,8 @@
 
 public struct ServerAcknowledgeMessage : IComponent
 {
-    public int inputMessageID;
+    public int ackMessageID;
     public Vector2 confirmedPosition;
-
     public int clientTime;
-
+    public uint entityID;
 }

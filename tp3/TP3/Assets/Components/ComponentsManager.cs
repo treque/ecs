@@ -32,12 +32,11 @@ internal class ComponentsManager : Singleton<ComponentsManager>
         ClearComponents<ReplicationMessage>();
         ClearComponents<InputMessage>();
         ClearComponents<CollisionEventComponent>();
-        ClearComponents<InputMessage>();
         ClearComponents<ServerAcknowledgeMessage>();
     }
 
     private Dictionary<Type, Dictionary<uint, IComponent>> _allComponents = new Dictionary<Type, Dictionary<uint, IComponent>>();
-    public List<KeyValuePair<InputMessage, Vector2>> InputPositionHistoryList = new List<KeyValuePair<InputMessage, Vector2>>();
+    public List<InputInfo> InputPositionHistoryList = new List<InputInfo>();
 
     public Queue<KeyValuePair<InputMessage, Vector2>> InputPositionHistory = new Queue<KeyValuePair<InputMessage, Vector2>>();
     public const int maxEntities = 2000;

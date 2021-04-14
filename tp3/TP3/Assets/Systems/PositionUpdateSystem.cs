@@ -20,6 +20,7 @@ public class PositionUpdateSystem : ISystem {
     public void UpdateSystem(float deltaTime)
     {
         ComponentsManager.Instance.ForEach<ShapeComponent>((entityID, shapeComponent) => {
+            //if( deadrecoking && clientid) break;
             shapeComponent.pos = GetNewPosition(shapeComponent.pos, shapeComponent.speed, deltaTime);
             ComponentsManager.Instance.SetComponent<ShapeComponent>(entityID, shapeComponent);
         });
@@ -27,7 +28,6 @@ public class PositionUpdateSystem : ISystem {
 
     public static Vector2 GetNewPosition(Vector2 position, Vector2 speed)
     {
-        Debug.Log(Time.deltaTime);
         return GetNewPosition(position, speed, Time.deltaTime);
     }
 

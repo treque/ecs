@@ -53,40 +53,48 @@ public class CustomNetworkManager : NetworkingManager
                 writer.WriteVector2(msg.pos);
                 writer.WriteVector2(msg.speed);
                 writer.WriteDouble(msg.size);
-                writer.WriteVector2(msg.inputs);
-                writer.WriteUInt32(msg.isAck);
-                writer.WriteInt32(msg.inputMessageID);
-                writer.WriteUInt32(msg.isInput);
                 CustomMessagingManager.SendNamedMessage("Replication", null, stream, "customChannel");
             }
         }
     }
 
 // client message to server
-    public void SendClientInputReplicationMessage(ReplicationMessage msg)
+    public void SendClientInputMessage(InputMessage msg)
     {
         using (PooledBitStream stream = PooledBitStream.Get())
         {
             using (PooledBitWriter writer = PooledBitWriter.Get(stream))
             {
-                writer.WriteInt32(msg.messageID);
-                writer.WriteInt32(msg.timeCreated);
-                writer.WriteUInt32(msg.entityId);
-                writer.WriteInt16((byte)msg.shape);
-                writer.WriteVector2(msg.pos);
-                writer.WriteVector2(msg.speed);
-                writer.WriteDouble(msg.size);
-                writer.WriteVector2(msg.inputs);
-                writer.WriteUInt32(msg.isAck);
                 writer.WriteInt32(msg.inputMessageID);
-                writer.WriteUInt32(msg.isInput);
-                CustomMessagingManager.SendNamedMessage("Replication", this.ServerClientId, stream, "customChannel");
+                writer.WriteVector2(msg.pos);
+                writer.WriteBool(msg.handled);
+                writer.WriteVector2(msg.inputs);
+                writer.WriteInt32(msg.clientTime);
+                writer.WriteUInt32(msg.entityID);
+
+                CustomMessagingManager.SendNamedMessage("Input", this.ServerClientId, stream, "customChannel");
+            }
+        }
+    }
+
+    public void SendServerAcknowledgementMessage(ServerAcknowledgeMessage msg)
+    {
+        using (PooledBitStream stream = PooledBitStream.Get())
+        {
+            using (PooledBitWriter writer = PooledBitWriter.Get(stream))
+            {
+                writer.WriteInt32(msg.ackMessageID);
+                writer.WriteVector2(msg.confirmedPosition);
+                writer.WriteInt32(msg.clientTime);
+                writer.WriteUInt32(msg.entityID);
+
+                CustomMessagingManager.SendNamedMessage("Acknowledge", null, stream, "customChannel");
             }
         }
     }
 
 // client receives server msg
-    private void HandleReplicationMessage(ulong clientId, Stream stream)
+    private void HandleServerReplicationMessage(ulong clientId, Stream stream)
     {
         ReplicationMessage replicationMessage = new ReplicationMessage();
         using (PooledBitReader reader = PooledBitReader.Get(stream))
@@ -98,10 +106,6 @@ public class CustomNetworkManager : NetworkingManager
             replicationMessage.pos = reader.ReadVector2();
             replicationMessage.speed = reader.ReadVector2();
             replicationMessage.size = (float)reader.ReadDouble();
-            replicationMessage.inputs = reader.ReadVector2();
-            replicationMessage.isAck = reader.ReadUInt32();
-            replicationMessage.inputMessageID = reader.ReadInt32();
-            replicationMessage.isInput = reader.ReadUInt32();
 
             ComponentsManager.Instance.SetComponent<ReplicationMessage>(replicationMessage.entityId, replicationMessage);
 
@@ -116,20 +120,11 @@ public class CustomNetworkManager : NetworkingManager
                 spawnInfo.replicatedEntitiesToSpawn.Add(replicationMessage);
                 ComponentsManager.Instance.SetComponent<SpawnInfo>(new EntityComponent(0), spawnInfo);
             }
-            
-            if (replicationMessage.isAck == 1) // client receives ack and adds component to deal with
-            {
-                ServerAcknowledgeMessage acknowledgeMessage = new ServerAcknowledgeMessage();
-                acknowledgeMessage.inputMessageID = replicationMessage.inputMessageID;
-                acknowledgeMessage.confirmedPosition = replicationMessage.pos;
-                acknowledgeMessage.clientTime = replicationMessage.timeCreated; // double check time is ok here
-                ComponentsManager.Instance.SetComponent<ServerAcknowledgeMessage>(replicationMessage.entityId, acknowledgeMessage);
-            }
         }
     }
 
 // server receives client msg
-    private void HandleClientInputReplicationMessage(ulong clientId, Stream stream)
+    /*private void HandleClientReplicationMessage(ulong clientId, Stream stream)
     {
         ReplicationMessage replicationMessage = new ReplicationMessage();
         using (PooledBitReader reader = PooledBitReader.Get(stream))
@@ -141,37 +136,56 @@ public class CustomNetworkManager : NetworkingManager
             replicationMessage.pos = reader.ReadVector2();
             replicationMessage.speed = reader.ReadVector2();
             replicationMessage.size = (float)reader.ReadDouble();
-            replicationMessage.inputs = reader.ReadVector2();
-            replicationMessage.isAck = reader.ReadUInt32();
-            replicationMessage.inputMessageID = reader.ReadInt32();
-            replicationMessage.isInput = reader.ReadUInt32(); // todo change to bool
+            
+            ComponentsManager.Instance.SetComponent<ReplicationMessage>(replicationMessage.entityId, replicationMessage);
+        }
+    }*/
 
-            if (replicationMessage.isInput == 1) 
+    private void HandleClientInputMessage(ulong clientId, Stream stream)
+    {
+        InputMessage inputMessage = new InputMessage();
+        using (PooledBitReader reader = PooledBitReader.Get(stream))
+        {
+            inputMessage.inputMessageID = reader.ReadInt32();
+            inputMessage.pos = reader.ReadVector2();
+            inputMessage.handled = reader.ReadBool();
+            inputMessage.inputs = reader.ReadVector2();
+            inputMessage.clientTime = reader.ReadInt32();
+            inputMessage.entityID = reader.ReadUInt32();
+            
+            ComponentsManager.Instance.SetComponent<InputMessage>(inputMessage.entityID, inputMessage);
+        }
+    }
+
+    public void HandleServerAcknowledgementMessage(ulong clientId, Stream stream)
+    {
+        ServerAcknowledgeMessage ackMessage = new ServerAcknowledgeMessage();
+        using (PooledBitReader reader = PooledBitReader.Get(stream))
+        {
+            ackMessage.ackMessageID = reader.ReadInt32();
+            ackMessage.confirmedPosition = reader.ReadVector2();
+            ackMessage.clientTime = reader.ReadInt32();
+            ackMessage.entityID = reader.ReadUInt32();
+
+            if (ackMessage.entityID == (uint)ECSManager.Instance.NetworkManager.LocalClientId)
             {
-                InputMessage inputMessage = new InputMessage();
-                inputMessage.inputMessageID = replicationMessage.inputMessageID;
-                inputMessage.message = replicationMessage;
-                inputMessage.handled = false;
-                inputMessage.inputs = replicationMessage.inputs;
-                inputMessage.clientTime = replicationMessage.timeCreated;
-                ComponentsManager.Instance.SetComponent<InputMessage>(replicationMessage.entityId, inputMessage);
-            }
-            else // TODO ?
-            {
-                ComponentsManager.Instance.SetComponent<ReplicationMessage>(replicationMessage.entityId, replicationMessage);
+                // Only add the message to the concerned client's components list
+                ComponentsManager.Instance.SetComponent<ServerAcknowledgeMessage>(ackMessage.entityID, ackMessage);
             }
         }
     }
 
     public void RegisterClientNetworkHandlers()
     {
-        CustomMessagingManager.RegisterNamedMessageHandler("Replication", HandleReplicationMessage);
+        CustomMessagingManager.RegisterNamedMessageHandler("Replication", HandleServerReplicationMessage);
+        CustomMessagingManager.RegisterNamedMessageHandler("Acknowledge", HandleServerAcknowledgementMessage);
     }
 
     public void RegisterServerNetworkHandlers()
     {
         // TODO
-        CustomMessagingManager.RegisterNamedMessageHandler("Replication", HandleClientInputReplicationMessage);
+        //CustomMessagingManager.RegisterNamedMessageHandler("Replication", HandleClientReplicationMessage);
+        CustomMessagingManager.RegisterNamedMessageHandler("Input", HandleClientInputMessage);
     }
 
 

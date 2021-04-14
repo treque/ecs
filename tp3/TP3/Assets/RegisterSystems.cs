@@ -20,6 +20,7 @@ public class RegisterSystems
         toRegister.Add(new PositionUpdateSystem());
         toRegister.Add(new ReplicationSystem());
         toRegister.Add(new NetworkMessageSystem());
+        toRegister.Add(new ExtrapolationSystem());
         toRegister.Add(new ClearEndOfFrameComponentsSystem());
         toRegister.Add(new DisplayShapePositionSystem());
 
