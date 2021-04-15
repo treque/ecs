@@ -37,8 +37,6 @@ internal class ComponentsManager : Singleton<ComponentsManager>
 
     private Dictionary<Type, Dictionary<uint, IComponent>> _allComponents = new Dictionary<Type, Dictionary<uint, IComponent>>();
     public List<InputInfo> InputPositionHistoryList = new List<InputInfo>();
-
-    public Queue<KeyValuePair<InputMessage, Vector2>> InputPositionHistory = new Queue<KeyValuePair<InputMessage, Vector2>>();
     public const int maxEntities = 2000;
 
     public void DebugPrint()

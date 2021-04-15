@@ -66,7 +66,6 @@ public class CustomNetworkManager : NetworkingManager
             using (PooledBitWriter writer = PooledBitWriter.Get(stream))
             {
                 writer.WriteInt32(msg.inputMessageID);
-                writer.WriteVector2(msg.pos);
                 writer.WriteBool(msg.handled);
                 writer.WriteVector2(msg.inputs);
                 writer.WriteInt32(msg.clientTime);
@@ -129,7 +128,6 @@ public class CustomNetworkManager : NetworkingManager
         using (PooledBitReader reader = PooledBitReader.Get(stream))
         {
             inputMessage.inputMessageID = reader.ReadInt32();
-            inputMessage.pos = reader.ReadVector2();
             inputMessage.handled = reader.ReadBool();
             inputMessage.inputs = reader.ReadVector2();
             inputMessage.clientTime = reader.ReadInt32();
@@ -165,7 +163,6 @@ public class CustomNetworkManager : NetworkingManager
 
     public void RegisterServerNetworkHandlers()
     {
-        // TODO
         CustomMessagingManager.RegisterNamedMessageHandler("Input", HandleClientInputMessage);
     }
 

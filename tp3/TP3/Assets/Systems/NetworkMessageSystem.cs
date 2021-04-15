@@ -22,7 +22,6 @@
 
         if (ECSManager.Instance.NetworkManager.isServer)
         {
-            // Ceci va envoyer les messages
             ComponentsManager.Instance.ForEach<ReplicationMessage>((entityID, msg) =>
             {
                 msg.messageID = messagingInfo.currentMessageId++;
@@ -40,13 +39,6 @@
 
         if (ECSManager.Instance.NetworkManager.isClient)
         {  
-            //TODO
-            /*ComponentsManager.Instance.ForEach<ReplicationMessage>((entityID, msg) =>
-            {
-                msg.messageID = messagingInfo.currentMessageId++;
-                ECSManager.Instance.NetworkManager.SendClientReplicationMessage(msg);
-            });*/
-
             ComponentsManager.Instance.ForEach<InputMessage>((entityID, msg) =>
             {
                 msg.inputMessageID = messagingInfo.currentInputMessageId++;

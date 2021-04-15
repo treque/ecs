@@ -27,15 +27,16 @@ public class ServerAcknowledgeSystem : ISystem
 
             if (history != null)
             {
-                InputInfo inputHistorique = history[0];
-                Vector2 positionHistorique = inputHistorique.pos; 
-                Vector2 positionServeur = ackMsg.confirmedPosition;
+                // Since we're clearing the history of the entries that are older than the acknowledgement we receive,
+                // we know that the first element of the list will correspond to the server acknoledgement message.
+                Vector2 positionInHistory = history[0].pos; 
+                Vector2 positionInServer = ackMsg.confirmedPosition;
 
-                if (positionHistorique != positionServeur)
+                if (positionInHistory != positionInServer)
                 {
                     if (ComponentsManager.Instance.TryGetComponent<ShapeComponent>(entityID, out ShapeComponent shape))
                     {
-                        Vector2 finalPos = positionServeur;
+                        Vector2 finalPos = positionInServer;
 
                         for (int i = 1; i < history.Count; ++i)
                         {

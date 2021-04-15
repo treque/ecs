@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ExtrapolationSystem : ISystem
 {
-    bool done = false;
+    private bool _done = false;
     public string Name
     {
         get
@@ -15,7 +15,7 @@ public class ExtrapolationSystem : ISystem
 
     public void UpdateSystem()
     {
-        if (!done && ECSManager.Instance.NetworkManager.isClient && ECSManager.Instance.Config.enablDeadReckoning)
+        if (!_done && ECSManager.Instance.NetworkManager.isClient && ECSManager.Instance.Config.enablDeadReckoning)
         {
             UpdateSystemClient();
         }
@@ -36,17 +36,15 @@ public class ExtrapolationSystem : ISystem
 
     private void SimulateNonClientEntities()
     {
-        // either at every frame you set the client's position/speed to what it was before the simulation
-        // either you change the position
         foreach(ISystem system in ECSManager.Instance.SystemsToExtrapolate)
         {
             system.UpdateSystem();
         }
-        done = true;
 
-        // syst keeps ~ 100 frames
-        // when receving server msg, check its time, subtract the latency (equivalent of time for client), 
-        // compare at that moment, if its the same as thhe server's 
-        // interpolate between the two frames if between two frames (check with a threshhold)
+        // We do this once at the start only. Eventually, the simulation should be ran again when the server's
+        // state does not match the client's
+        // We should do that correction in a new system that saves the previous states so that we can compare
+        // to ours, and interpolate between them for smoothing.
+        _done = true;
     }
 }

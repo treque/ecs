@@ -33,7 +33,6 @@ public class InputSystem : ISystem
                 shape.speed = Vector2.zero;
                 if (!inputMessage.handled)
                 {           
-                    Debug.Log("THERE IS AN INPUT");
                     shape.speed = ECSManager.Instance.SPEED * inputMessage.inputs;
                     inputMessage.handled = true;
                     ComponentsManager.Instance.SetComponent<InputMessage>(entityID, inputMessage);
@@ -84,28 +83,22 @@ public class InputSystem : ISystem
         {
             if (ComponentsManager.Instance.TryGetComponent<ShapeComponent>(clientId, out ShapeComponent shape))
             {
-                // storing the necessary information in an InputMessage for history
+                // storing the necessary information in an InputInfo for history
                 InputInfo inputInfo = new InputInfo();
                 inputInfo.input = message.inputs;
                 inputInfo.clientTime = message.clientTime; 
 
                 Vector2 newPos = PositionUpdateSystem.GetNewPosition(shape.pos, message.inputs * ECSManager.Instance.SPEED);
-                message.pos = newPos;
                 inputInfo.pos = newPos;
-
                 ComponentsManager.Instance.InputPositionHistoryList.Add(inputInfo);
-
-                Debug.Log("added to history: time : " + inputInfo.clientTime + " pos: " + newPos);
-
-                //todo: simuler cote client
-                //shape.speed = _SPEED * message.inputs; // positioN??????
                 shape.pos = newPos;
-                // this calls it twice
+
                 if (ECSManager.Instance.Config.enableInputPrediction)
                 {
                     ComponentsManager.Instance.SetComponent<ShapeComponent>(clientId, shape);
                 }
             }
+
             ComponentsManager.Instance.SetComponent<InputMessage>(clientId, message);
         }
     }

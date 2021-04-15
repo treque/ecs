@@ -64,28 +64,30 @@ public class ReplicationSystem : ISystem
             }
             else
             {
-                // On préfère que vous évaluez notre travail sur le input prediction séparément de notre travail sur
-                // l'extrapolation parce qu'il nous manquait du temps pour combiner les deux.
+                // Depending on the options in the config, we either do not apply the server's state on the client entities
+                // and non client entities
                 if (!ECSManager.Instance.Config.enableInputPrediction && 
                     ECSManager.Instance.Config.enablDeadReckoning && 
                     msgReplication.entityId == ECSManager.Instance.NetworkManager.LocalClientId)
                 {
-                    component.pos = msgReplication.pos;
-                    component.speed = msgReplication.speed;
-                    component.size = msgReplication.size;
-                    ComponentsManager.Instance.SetComponent<ShapeComponent>(msgReplication.entityId, component);
+                    ReplicationSystem.ApplyServerState(component);
                 }
                 
                 if (ECSManager.Instance.Config.enableInputPrediction && 
                     !ECSManager.Instance.Config.enablDeadReckoning && 
                     msgReplication.entityId != ECSManager.Instance.NetworkManager.LocalClientId)
                 {
-                    component.pos = msgReplication.pos;
-                    component.speed = msgReplication.speed;
-                    component.size = msgReplication.size;
-                    ComponentsManager.Instance.SetComponent<ShapeComponent>(msgReplication.entityId, component);
+                    ReplicationSystem.ApplyServerState(component);
                 }
             }
         });
+    }
+
+    public static void ApplyServerState(ShapeComponent component)
+    {
+        component.pos = msgReplication.pos;
+        component.speed = msgReplication.speed;
+        component.size = msgReplication.size;
+        ComponentsManager.Instance.SetComponent<ShapeComponent>(msgReplication.entityId, component);
     }
 }
