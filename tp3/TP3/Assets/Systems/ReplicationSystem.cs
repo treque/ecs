@@ -70,20 +70,20 @@ public class ReplicationSystem : ISystem
                     ECSManager.Instance.Config.enablDeadReckoning && 
                     msgReplication.entityId == ECSManager.Instance.NetworkManager.LocalClientId)
                 {
-                    ReplicationSystem.ApplyServerState(component);
+                    ReplicationSystem.ApplyServerState(component, msgReplication);
                 }
                 
                 if (ECSManager.Instance.Config.enableInputPrediction && 
                     !ECSManager.Instance.Config.enablDeadReckoning && 
                     msgReplication.entityId != ECSManager.Instance.NetworkManager.LocalClientId)
                 {
-                    ReplicationSystem.ApplyServerState(component);
+                    ReplicationSystem.ApplyServerState(component, msgReplication);
                 }
             }
         });
     }
 
-    public static void ApplyServerState(ShapeComponent component)
+    public static void ApplyServerState(ShapeComponent component, ReplicationMessage msgReplication)
     {
         component.pos = msgReplication.pos;
         component.speed = msgReplication.speed;
